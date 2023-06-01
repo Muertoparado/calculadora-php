@@ -198,20 +198,14 @@ class Calculadora{
                 <td><input type="submit" name="numeros" value="3"></td>
                 <td><input type="submit" name="operadores" value="+"></td>
             </tr>
-            <tr>
-                
-                
-               
-            </tr>
+    
             <tr>
                 <td><input type="submit" name="numeros" value="4"></td>
                 <td><input type="submit" name="numeros" value="5"></td>
                 <td><input type="submit" name="numeros" value="6"></td>
                 <td><input type="submit" name="operadores" value="-"></td>
             </tr>
-            <tr>
-               
-            </tr>
+
             <tr>
                 <td><input type="submit" name="numeros" value="7"></td>
                 <td><input type="submit" name="numeros" value="8"></td>
