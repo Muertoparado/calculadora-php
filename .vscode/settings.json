@@ -1,6 +1,7 @@
 {
     "liveServer.settings.port": 5501,
     "conventionalCommits.scopes": [
-        "calculadora php}"
+        "calculadora php}",
+        "formato reducido calculadora"
     ]
 }

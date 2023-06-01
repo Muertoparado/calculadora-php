@@ -1,19 +1,76 @@
 <?php
+ 
+
+class Calculadora{
+   
+    public $num1=[];
+    public $num2=[];
+
+
+    public function __construct(){
+        this->inicio();
+        this->arr1();    
+        switch ($operador) {
+            case '+':
+            this->arr2();
+                $resultado = $num1 + $num2;
+                echo $resultado;
+                break;
+            case '-':
+                this->arr2();
+                $resultado = $num1 - $num2;
+                echo $resultado;
+                break;
+            case '*':
+                this->arr2();
+                $resultado = $num1 * $num2;
+                echo $resultado;
+                break;
+            case '/':
+                this->arr2();
+                $resultado = $num1 / $num2;
+                echo $resultado;
+                break;
+        }
+        echo $resultado;
+
+    }
+
+    public function arr1 (){
+        $num1 = $_POST['numeros'];
+        echo $num1;
+
+    }
+    public function arr2 (){
+        $num2 = $_POST['numeros'];
+        echo $num2;
+
+    }
+    public function inicio (){
+        if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            $operador = $_POST['operadores'];
+            $resultado = 0;
+    }
+}
+}
+
 
 //header('Content-Type: application/json');
 
-class Calculadora 
+/* class Calculadora 
 {
     public $num1=[];
     public $num2=[];
 
     public function __construct($operacion){
         $numero=$_POST['submit'];
-        $num1 =array_push($numero);
+        array1($num1);
         var_dump($num1);
         $operacion = $_POST['op'];
         switch ($operacion) {
         case '+':
+            array2($num2);
+
             break;
 
         case '-':
@@ -120,7 +177,7 @@ class Calculadora
                 $num2['numero']['0'] = $_POST['0'];
             }
         }
-}
+} */
 
 ?>
 <!DOCTYPE html>
@@ -133,23 +190,42 @@ class Calculadora
 </head>
 <body>
     <div>
-        <form action="post" >
-        <input type="submit" name="1" value="1">
-        <input type="submit" name="2" value="2">
-        <input type="submit" name="3" value="3">
-        <input type="submit" name="op" value="+">
-        <input type="submit" name="op" value="-"><br><br>
-        <input type="submit" name="4" value="4">
-        <input type="submit" name="5" value="5">
-        <input type="submit" name="6" value="6">
-        <input type="submit" name="op" value="*">
-        <input type="submit" name="op" value="/"><br><br>
-        <input type="submit" name="7" value="7">
-        <input type="submit" name="8" value="8">
-        <input type="submit" name="9" value="9">
-        <input type="submit" name="0" value="0">
-        <input type="submit" name="op" value="=">
-        </form>
+       <form method="post">
+        <table>
+            <tr>
+                <td><input type="submit" name="numeros" value="1"></td>
+                <td><input type="submit" name="numeros" value="2"></td>
+                <td><input type="submit" name="numeros" value="3"></td>
+                <td><input type="submit" name="operadores" value="+"></td>
+            </tr>
+            <tr>
+                
+                
+               
+            </tr>
+            <tr>
+                <td><input type="submit" name="numeros" value="4"></td>
+                <td><input type="submit" name="numeros" value="5"></td>
+                <td><input type="submit" name="numeros" value="6"></td>
+                <td><input type="submit" name="operadores" value="-"></td>
+            </tr>
+            <tr>
+               
+            </tr>
+            <tr>
+                <td><input type="submit" name="numeros" value="7"></td>
+                <td><input type="submit" name="numeros" value="8"></td>
+                <td><input type="submit" name="numeros" value="9"></td>
+                <td><input type="submit" name="operadores" value="*"></td>
+            </tr>
+            <tr>
+                <td><input type="submit" name="numeros" value="0"></td>
+                <td><input type="submit" name="operadores" value="/"></td>
+                <td><input type="submit" name="equals" value="="></td>
+
+            </tr>
+        </table>
+    </form>
        
     </div>
 </body>
