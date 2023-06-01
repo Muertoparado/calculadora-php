@@ -1,5 +1,6 @@
 <?php
- 
+ session_start();
+
 
 class Calculadora{
    
@@ -10,9 +11,33 @@ class Calculadora{
     public function __construct(){
         this->inicio();
         this->arr1();    
+        
+    }
+
+    public function arr1 (){
+        $num1 = $_POST['numeros'];
+        $_SESSION['arr'][]=$num1;
+        echo($num1) ;
+
+    }
+    public function arr2 (){
+        $num2 = $_POST['numeros'];
+        $_SESSION['arr'][]=$num2;
+        echo $num2;
+
+    }
+    public function inicio (){
+        if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            header('Location: ' . $_SERVER['PHP_SELF']);
+            $_SESSION=$_POST['arr'];
+            $operador = $_POST['operadores'];
+            $resultado = 0;
+    }
+}
+    public function operacion(){
         switch ($operador) {
             case '+':
-            this->arr2();
+                this->arr2();
                 $resultado = $num1 + $num2;
                 echo $resultado;
                 break;
@@ -32,27 +57,11 @@ class Calculadora{
                 echo $resultado;
                 break;
         }
-        echo $resultado;
 
-    }
-
-    public function arr1 (){
-        $num1 = $_POST['numeros'];
-        echo $num1;
-
-    }
-    public function arr2 (){
-        $num2 = $_POST['numeros'];
-        echo $num2;
-
-    }
-    public function inicio (){
-        if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
-            $operador = $_POST['operadores'];
-            $resultado = 0;
     }
 }
-}
+
+$obj= new Calculadora();
 
 
 //header('Content-Type: application/json');
@@ -189,7 +198,9 @@ class Calculadora{
     <title>Document</title>
 </head>
 <body>
-    <div>
+    <div ><div><?php
+    echo $resultado;
+    ?></div>
        <form method="post">
         <table>
             <tr>
