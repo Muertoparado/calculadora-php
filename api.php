@@ -1,23 +1,101 @@
 <?php
- session_start();
+
+session_start();
+//session_reset();
+
+class Calculadora
+{
+    public $num1 = [];
+    public $num2 = [];
+
+    public function __construct()
+    {
+        $this->inicio();
+        $this->arr1();
+    }
+
+    public function arr1()
+    {
+        if (isset($_SESSION['operador'])) {
+            $num2 = $_POST['numeros'];
+            $_SESSION['num2'][] = $num2;
+            echo $num2;
+        } else {
+            $num1 = $_POST['numeros'];
+            $_SESSION['num1'][] = $num1;
+            echo $num1;
+        }
+    }
+
+    public function inicio()
+    {
+        if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            if (isset($_POST['operadores'])) {
+                $_SESSION['operador'] = $_POST['operadores'];
+            }
+          //  header('Location: ' . $_SERVER['PHP_SELF']);
+        }
+        var_dump($_SESSION['operador'][0]);
+    }
+
+    public function operacion()
+    {
+        if (isset($_POST['equals'])) {
+            $num1 = implode('', $_SESSION['num1']);
+            $num2 = implode('', $_SESSION['num2']);
+            $operador = $_SESSION['operador'];
+            var_dump($operador);
+            $resultado = 0;
+
+            switch ($operador) {
+                case '+':
+                    var_dump($num1);
+                    var_dump($num2);
+                    $resultado = $num1 + $num2;
+                    echo $resultado;
+                    break;
+                case '-':
+                    $resultado = $num1 - $num2;
+                    echo $resultado;
+                    break;
+                case '*':
+                    $resultado = $num1 * $num2;
+                    echo $resultado;
+                    break;
+                case '/':
+                    $resultado = $num1 / $num2;
+                    echo $resultado;
+                    break;
+                case 'C':
+                    $_SESSION['operador']=array();
+                    break;
+            }
+        }
+    }
+}
+
+$obj = new Calculadora();
+$obj->operacion();
+
+
+/* session_start();
 
 
 class Calculadora{
-   
     public $num1=[];
     public $num2=[];
 
 
     public function __construct(){
-        this->inicio();
-        this->arr1();    
+        $this->inicio();
+        $this->arr1();    
         
     }
 
     public function arr1 (){
-        $num1 = $_POST['numeros'];
-        $_SESSION['arr'][]=$num1;
-        echo($num1) ;
+        $_num1 = $_POST['numeros'];
+        $_SESSION['arr'][]=$_num1;
+        echo($_num1) ;
 
     }
     public function arr2 (){
@@ -35,25 +113,25 @@ class Calculadora{
     }
 }
     public function operacion(){
-        switch ($operador) {
+        switch ($_operador) {
             case '+':
-                this->arr2();
-                $resultado = $num1 + $num2;
+                $this->arr2();
+                $resultado = $_num1 + $_num2;
                 echo $resultado;
                 break;
             case '-':
-                this->arr2();
-                $resultado = $num1 - $num2;
+                $this->arr2();
+                $resultado = $_num1 - $_num2;
                 echo $resultado;
                 break;
             case '*':
-                this->arr2();
-                $resultado = $num1 * $num2;
+                $this->arr2();
+                $resultado = $_num1 * $_num2;
                 echo $resultado;
                 break;
             case '/':
-                this->arr2();
-                $resultado = $num1 / $num2;
+                $this->arr2();
+                $resultado = $_num1 / $_num2;
                 echo $resultado;
                 break;
         }
@@ -61,132 +139,8 @@ class Calculadora{
     }
 }
 
-$obj= new Calculadora();
-
-
-//header('Content-Type: application/json');
-
-/* class Calculadora 
-{
-    public $num1=[];
-    public $num2=[];
-
-    public function __construct($operacion){
-        $numero=$_POST['submit'];
-        array1($num1);
-        var_dump($num1);
-        $operacion = $_POST['op'];
-        switch ($operacion) {
-        case '+':
-            array2($num2);
-
-            break;
-
-        case '-':
-            break;
-
-        case '*':
-            break;
-
-        case '/':
-            break;
-        case'=':
-            break;
-        }
-    }
-
-    public function array1(){
-        if (!isset($num1['numero'])) {
-            $num1['numero'] = array();
-        }
-        if (isset($_POST['1'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['1'] = $_POST['1'];
-        }
-        if (isset($_POST['2'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['2'] = $_POST['2'];
-        }
-        if (isset($_POST['3'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['3'] = $_POST['3'];
-        }
-        if (isset($_POST['4'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['4'] = $_POST['4'];
-        }
-        if (isset($_POST['5'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['5'] = $_POST['5'];
-        }
-        if (isset($_POST['6'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['6'] = $_POST['6'];
-        }
-        if (isset($_POST['7'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['7'] = $_POST['7'];
-        }
-        if (isset($_POST['8'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['8'] = $_POST['8'];
-        }
-        if (isset($_POST['9'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['9'] = $_POST['9'];
-        }
-        if (isset($_POST['0'])) {
-            // Agregar el valor del botón 1 al array de ingresos
-            $num1['numero']['0'] = $_POST['0'];
-        }
-    }
-
-        public function array2(){
-            if (!isset($num2['numero'])) {
-                $num2['numero'] = array();
-            }
-            if (isset($_POST['1'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['1'] = $_POST['1'];
-            }
-            if (isset($_POST['2'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['2'] = $_POST['2'];
-            }
-            if (isset($_POST['3'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['3'] = $_POST['3'];
-            }
-            if (isset($_POST['4'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['4'] = $_POST['4'];
-            }
-            if (isset($_POST['5'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['5'] = $_POST['5'];
-            }
-            if (isset($_POST['6'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['6'] = $_POST['6'];
-            }
-            if (isset($_POST['7'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['7'] = $_POST['7'];
-            }
-            if (isset($_POST['8'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['8'] = $_POST['8'];
-            }
-            if (isset($_POST['9'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['9'] = $_POST['9'];
-            }
-            if (isset($_POST['0'])) {
-                // Agregar el valor del botón 1 al array de ingresos
-                $num2['numero']['0'] = $_POST['0'];
-            }
-        }
-} */
+$obj= new Calculadora(); 
+*/
 
 ?>
 <!DOCTYPE html>
@@ -198,10 +152,8 @@ $obj= new Calculadora();
     <title>Document</title>
 </head>
 <body>
-    <div ><div><?php
-    echo $resultado;
-    ?></div>
-       <form method="post">
+    <div >
+        <form method="post">
         <table>
             <tr>
                 <td><input type="submit" name="numeros" value="1"></td>
@@ -224,6 +176,7 @@ $obj= new Calculadora();
                 <td><input type="submit" name="operadores" value="*"></td>
             </tr>
             <tr>
+                <td><input type="submit" name="operadores" value="C"></td>
                 <td><input type="submit" name="numeros" value="0"></td>
                 <td><input type="submit" name="operadores" value="/"></td>
                 <td><input type="submit" name="equals" value="="></td>
