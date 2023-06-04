@@ -5,6 +5,111 @@ session_start();
 
 class Calculadora
 {
+    public function __construct()
+    {
+        $this->inicio();
+        $this->arr1();
+    }
+
+    public function arr1()
+    {
+        if (isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            $valor = $_POST['numeros'] ?? $_POST['operadores'];
+            if (!isset($_SESSION['valores'])) {
+                $_SESSION['valores'] = (array) [];
+            }
+            $_SESSION['valores'][] = $valor;
+        }
+    }
+
+    public function inicio()
+    {
+        if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            $this->operacion();
+            if (isset($_POST['operadores'])) {
+                $_SESSION['operador'] = $_POST['operadores'];
+            }
+          //  header('Location: ' . $_SERVER['PHP_SELF']);
+        }
+        var_dump($_SESSION['operador']);
+    }
+
+    public function operacion()
+    {
+        if (isset($_POST['equals'])) {
+            if (isset($_SESSION['valores'])) {
+                $valores = $_SESSION['valores'];
+                $datos = [];
+                $numero = '';
+
+                foreach ($_SESSION['valores'] as $data) {
+                    if (is_numeric($data)) {
+                        $numero .= $data;
+                    } else {
+                        if (!empty($numero)) {
+                            $datos[] = (int) $numero;
+                            $numero = '';
+                        }
+                    }
+                }
+
+                if (!empty($numero)) {
+                    $datos[] = (int) $numero;
+                }
+
+                $string = implode($_SESSION['valores']);
+                $string = str_replace(' ', '', $string);
+                $string = strrev($string);
+                $operadores = ['*', '/', '+', '-'];
+                $resultado = (float)$string;
+                $i = 1;
+
+                echo strrev($string)." =\n";
+
+                while ($i < strlen($string)) {
+                    $operador = $string[$i];
+                    $numero = '';
+
+                    while ($i < strlen($string) && !in_array($string[$i + 1], $operadores)) {
+                        $numero .= $string[$i + 1];
+                        $i++;
+                    }
+                    switch ($operador) {
+                        case '*':
+                            $resultado *= (float)$numero;
+                            break;
+                        case '/':
+                            if ((float)$numero != 0) {
+                                $resultado /= (float)$numero;
+                            } else {
+                                $resultado = NAN;
+                            }
+                            break;
+                        case '+':
+                            $resultado += (float)$numero;
+                            break;
+                        case '-':
+                            $resultado -= (float)$numero;
+                            break;
+                    }
+
+                    $i++;
+                }
+
+                echo $resultado;
+            }
+        }
+    }
+}
+
+$obj = new Calculadora();
+$obj->operacion();
+
+?>
+
+
+/* class Calculadora
+{
     public $num1 = [];
     public $num2 = [];
 
@@ -30,12 +135,13 @@ class Calculadora
     public function inicio()
     {
         if (isset($_POST['equals']) || isset($_POST['numeros']) || isset($_POST['operadores'])) {
+            $this->operacion();
             if (isset($_POST['operadores'])) {
                 $_SESSION['operador'] = $_POST['operadores'];
             }
           //  header('Location: ' . $_SERVER['PHP_SELF']);
         }
-        var_dump($_SESSION['operador'][0]);
+        var_dump($_SESSION['operador']);
     }
 
     public function operacion()
@@ -51,23 +157,25 @@ class Calculadora
                 case '+':
                     var_dump($num1);
                     var_dump($num2);
-                    $resultado = $num1 + $num2;
+                   // $num1= eval('num1');
+                    $resultado = eval("$num1+$num2");
                     echo $resultado;
                     break;
                 case '-':
-                    $resultado = $num1 - $num2;
+               //     $resultado = eval($num1 - $num2);
                     echo $resultado;
                     break;
                 case '*':
-                    $resultado = $num1 * $num2;
+                  //  $resultado = eval($num1 * $num2);
                     echo $resultado;
                     break;
                 case '/':
-                    $resultado = $num1 / $num2;
+                 //   $resultado = eval($num1 / $num2);
                     echo $resultado;
                     break;
                 case 'C':
-                    $_SESSION['operador']=array();
+                    $_SESSION['num1']=array();
+                   // $_SESSION['num2']=array();
                     break;
             }
         }
@@ -76,7 +184,7 @@ class Calculadora
 
 $obj = new Calculadora();
 $obj->operacion();
-
+ */
 
 /* session_start();
 
@@ -161,14 +269,12 @@ $obj= new Calculadora();
                 <td><input type="submit" name="numeros" value="3"></td>
                 <td><input type="submit" name="operadores" value="+"></td>
             </tr>
-    
             <tr>
                 <td><input type="submit" name="numeros" value="4"></td>
                 <td><input type="submit" name="numeros" value="5"></td>
                 <td><input type="submit" name="numeros" value="6"></td>
                 <td><input type="submit" name="operadores" value="-"></td>
             </tr>
-
             <tr>
                 <td><input type="submit" name="numeros" value="7"></td>
                 <td><input type="submit" name="numeros" value="8"></td>
@@ -184,7 +290,6 @@ $obj= new Calculadora();
             </tr>
         </table>
     </form>
-       
     </div>
 </body>
 </html>
