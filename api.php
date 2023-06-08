@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 
+session_reset();
 session_start();
-//session_reset();
-
 class Calculadora
 {
     public function __construct()
@@ -32,6 +32,7 @@ class Calculadora
           //  header('Location: ' . $_SERVER['PHP_SELF']);
         }
         var_dump($_SESSION['operador']);
+       // var_dump($_SESSION['num1']);
     }
 
     public function operacion()
@@ -107,8 +108,8 @@ $obj->operacion();
 
 ?>
 
-
-/* class Calculadora
+<!-- 
+    /* class Calculadora
 {
     public $num1 = [];
     public $num2 = [];
@@ -250,7 +251,8 @@ class Calculadora{
 $obj= new Calculadora(); 
 */
 
-?>
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
